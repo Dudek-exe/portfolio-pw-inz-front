@@ -4,7 +4,7 @@ import {Datagrid, Filter, List, TextField, TextInput} from 'react-admin';
 
 const AssetFilter = (props) => (
     <Filter {...props}>
-        <TextInput label="Nazwa" source="name" alwaysOn/>
+        <TextInput label="Nazwa" source="name" alwaysOn name="name"/>
     </Filter>
 );
 

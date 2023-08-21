@@ -11,8 +11,8 @@ const CurrencyFilter = (props) => (
     </Filter>
 );
 
-export const CurrencyList = (props) => (
-    <List {...props} title="Waluty" perPage={25} filters={<CurrencyFilter/>}>
+export const CurrencySearchList = (props) => (
+    <List {...props} title="Waluty - wyszukiwarka" perPage={25} filters={<CurrencyFilter/>}>
         <Datagrid rowClick="edit" bulkActionButtons={false}>
 
             <TextField source="id" label="Lp"/>

@@ -10,7 +10,6 @@ import {
     Edit,
     Filter,
     List,
-    maxValue,
     minValue,
     NumberField,
     NumberInput,
@@ -18,16 +17,14 @@ import {
     SelectInput,
     SimpleForm,
     TextField,
-    TextInput,
-    useRecordContext
+    TextInput, useRecordContext
 } from 'react-admin';
 
 const choices = [
-    {id: 'car', name: 'Samochód'},
-    {id: 'moto', name: 'Motocykl'},
-    {id: 'boat', name: 'Łodź'},
-    {id: 'yacht', name: 'Jacht'},
-    {id: 'electronics', name: 'Elektronika'},
+    {id: 'apartment', name: 'Mieszkanie'},
+    {id: 'house', name: 'Dom'},
+    {id: 'land', name: 'Działka'},
+    {id: 'service', name: 'Lokal Usługowy'},
     {id: 'others', name: 'Inne'},
 ];
 
@@ -37,22 +34,21 @@ const PostBulkActionButtons = () => (
     </Fragment>
 );
 
-const MovableFilter = (props) => (
+const PropertyFilter = (props) => (
     <Filter {...props}>
         <TextInput label="Nazwa" source="name" alwaysOn name="name"/>
         <TextInput label="Marka" source="brand" alwaysOn name="brand"/>
     </Filter>
 );
 
-export const MovableList = props => (
-    <List {...props} title="Ruchomości" perPage={25} filters={<MovableFilter/>}>
+export const PropertyList = props => (
+    <List {...props} title="Nieruchomości" perPage={25} filters={<PropertyFilter/>}>
         <Datagrid rowClick="edit" bulkActionButtons={<PostBulkActionButtons/>}>
             <TextField source="id" label="lp"/>
             <TextField source="name" label="Nazwa"/>
-            <TextField source="brand" label="Marka"/>
-            <TextField source="model" label="Model"/>
-            <TextField source="movableType" label="Typ"/>
-            <NumberField source="productionYear" label="Rocznik"/>
+            <TextField source="address" label="Adres"/>
+            <TextField source="area" label="Powierzchnia"/>
+            <TextField source="propertyType" label="Typ"/>
             <DateField source="purchaseDate" label="Data zakupu"/>
             <NumberField source="purchasePrice" label="Cena zakupu"/>
             <CompareNumbersField sourceA="estimatedValue" sourceB="purchasePrice" label="Szacowana wartość"/>
@@ -60,42 +56,35 @@ export const MovableList = props => (
     </List>
 );
 
-export const MovableCreate = () => (
+export const PropertyCreate = () => (
     <Create mutationMode="optimistic">
         <SimpleForm>
             <TextInput source="name" label="Nazwa" validate={required("Pole wymagane")}/>
-            <TextInput source="brand" label="Marka" validate={required("Pole wymagane")}/>
-            <TextInput source="model" label="Model" validate={required("Pole wymagane")}/>
-            <NumberInput source="productionYear" label="Rocznik" validate={validateYearNumber}/>
+            <TextInput source="address" label="Adres"/>
+            <NumberInput source="area" label="Powierzchnia" validate={required("Pole wymagane")}/>
             <DateInput source="purchaseDate" label="Data zakupu"/>
             <NumberInput source="purchasePrice" label="Cena zakupu" validate={validatePositiveNumber}/>
             <NumberInput source="estimatedValue" label="Szacowana wartość"/>
-            <SelectInput source="movableType" label="Typ ruchomości" choices={choices} validate={required("Pole wymagane")}/>
+            <SelectInput source="propertyType" label="Typ ruchomości" choices={choices} validate={required("Pole wymagane")}/>
         </SimpleForm>
     </Create>
 );
 
-export const MovableEdit = () => (
+export const PropertyEdit = () => (
     <Edit mutationMode="optimistic">
         <SimpleForm>
             <TextInput source="name" label="Nazwa" validate={required("Pole wymagane")}/>
-            <TextInput source="brand" label="Marka" validate={required("Pole wymagane")}/>
-            <TextInput source="model" label="Model" validate={required("Pole wymagane")}/>
-            <NumberInput source="productionYear" label="Rocznik" validate={validateYearNumber}/>
+            <TextInput source="address" label="Adres"/>
+            <NumberInput source="area" label="Powierzchnia" validate={required("Pole wymagane")}/>
             <DateInput source="purchaseDate" label="Data zakupu"/>
             <NumberInput source="purchasePrice" label="Cena zakupu" validate={validatePositiveNumber}/>
             <NumberInput source="estimatedValue" label="Szacowana wartość"/>
-            <SelectInput source="movableType" label="Typ ruchomości" choices={choices} validate={required("Pole wymagane")}/>
+            <SelectInput source="propertyType" label="Typ ruchomości" choices={choices} validate={required("Pole wymagane")}/>
         </SimpleForm>
     </Edit>
 );
 
 const validatePositiveNumber = [minValue(0, 'Wartość musi być dodatnia')];
-
-const validateYearNumber = [
-    minValue(0, 'Rok musi być dodatni'),
-    maxValue(new Date().getFullYear(), 'Niepoprawny rok')
-];
 
 const CompareNumbersField = (props) => {
     const record = useRecordContext();

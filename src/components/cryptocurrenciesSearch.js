@@ -1,6 +1,7 @@
 import * as React from "react";
 
-import {Datagrid, DateField, DateInput, Filter, List, TextField, TextInput} from 'react-admin';
+import {Datagrid, DateField, DateInput, Filter, List, ListBase, TextField, TextInput, WithListContext} from 'react-admin';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid } from 'recharts';
 
 const CryptoCurrencyFilter = (props) => (
     <Filter {...props}>
@@ -23,5 +24,23 @@ export const CryptoCurrencySearchList = (props) => (
                        label="Data"
                        showTime/>
         </Datagrid>
+        <div style={{ width: '100%', height: '300px' }}>
+            <CryptoCurrencyChart width={1500} height={300}/>
+        </div>
     </List>
+);
+
+const CryptoCurrencyChart = ({ width, height}) => (
+    <ListBase resource="cryptoCurrencySearch" disableSyncWithLocation perPage={100}>
+        <WithListContext
+            render={({ data }) => (
+                <LineChart width={width} height={height} data={data}>
+                    <XAxis dataKey="name"/>
+                    <YAxis />
+                    <CartesianGrid stroke="#eee" strokeDasharray="5 5" />
+                    <Line dataKey="rate" type="monotone" stroke="#8884d8" />
+                </LineChart>
+            )}
+        />
+    </ListBase>
 );

@@ -91,7 +91,10 @@ const CompareNumbersField = (props) => {
     const valueA = parseFloat(record[props.sourceA]);
     const valueB = parseFloat(record[props.sourceB]);
 
-    const textColor = valueA > valueB ? 'green' : 'red';
+    let textColor = valueA > valueB ? 'green' : 'red';
+    if (valueA === valueB) {
+        textColor = 'black'
+    }
 
     return <span style={{color: textColor}}>{valueA}</span>;
 };

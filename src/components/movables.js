@@ -67,7 +67,7 @@ export const MovableCreate = () => (
             <TextInput source="brand" label="Marka" validate={required("Pole wymagane")}/>
             <TextInput source="model" label="Model" validate={required("Pole wymagane")}/>
             <NumberInput source="productionYear" label="Rocznik" validate={validateYearNumber}/>
-            <DateInput source="purchaseDate" label="Data zakupu"/>
+            <DateInput source="purchaseDate" label="Data zakupu" validate={required("Pole wymagane")}/>
             <NumberInput source="purchasePrice" label="Cena zakupu" validate={validatePositiveNumber}/>
             <NumberInput source="estimatedValue" label="Szacowana wartość"/>
             <SelectInput source="movableType" label="Typ ruchomości" choices={choices} validate={required("Pole wymagane")}/>
@@ -82,7 +82,7 @@ export const MovableEdit = () => (
             <TextInput source="brand" label="Marka" validate={required("Pole wymagane")}/>
             <TextInput source="model" label="Model" validate={required("Pole wymagane")}/>
             <NumberInput source="productionYear" label="Rocznik" validate={validateYearNumber}/>
-            <DateInput source="purchaseDate" label="Data zakupu"/>
+            <DateInput source="purchaseDate" label="Data zakupu"  validate={required("Pole wymagane")}/>
             <NumberInput source="purchasePrice" label="Cena zakupu" validate={validatePositiveNumber}/>
             <NumberInput source="estimatedValue" label="Szacowana wartość"/>
             <SelectInput source="movableType" label="Typ ruchomości" choices={choices} validate={required("Pole wymagane")}/>
@@ -102,7 +102,9 @@ const CompareNumbersField = (props) => {
     const valueA = parseFloat(record[props.sourceA]);
     const valueB = parseFloat(record[props.sourceB]);
 
-    const textColor = valueA > valueB ? 'green' : 'red';
-
+    let textColor = valueA > valueB ? 'green' : 'red';
+    if (valueA === valueB) {
+        textColor = 'black'
+    }
     return <span style={{color: textColor}}>{valueA}</span>;
 };
